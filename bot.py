@@ -19,8 +19,6 @@ async def handle_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("⛔ Bot private")
         return
 
-    file_id = None
-
     if update.message.video:
         file_id = update.message.video.file_id
     elif update.message.document and update.message.document.mime_type.startswith("video"):
@@ -33,10 +31,8 @@ async def handle_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     app = ApplicationBuilder().token(TOKEN).build()
-
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.VIDEO | filters.Document.VIDEO, handle_video))
-
     app.run_polling()
 
 if __name__ == "__main__":
